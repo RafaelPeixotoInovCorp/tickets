@@ -1,0 +1,688 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Light theme (default) */
+:root {
+    --kirri-bg: #f3f5f9;
+    --kirri-surface: #ffffff;
+    --kirri-surface-muted: #f4f7fb;
+    --kirri-surface-hover: #e8edf5;
+    --kirri-border: #d5ddea;
+    --kirri-border-hover: #b3c0d4;
+    --kirri-text: #1e2a3b;
+    --kirri-text-secondary: #556580;
+    --kirri-text-muted: #8a9bb8;
+    --kirri-primary: #2b4c7e;
+    --kirri-primary-dark: #1e3a63;
+    --kirri-primary-soft: color-mix(in srgb, #2b4c7e 12%, transparent);
+    --kirri-accent: #4f7cf6;
+    --kirri-input-bg: #f4f7fb;
+    --kirri-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --kirri-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --kirri-success-bg: #ecfdf5;
+    --kirri-success-border: #a7f3d0;
+    --kirri-success-text: #065f46;
+    --kirri-amber-bg: #fffbeb;
+    --kirri-amber-border: #fde68a;
+    --kirri-amber-text: #92400e;
+    --ease-kirri: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-kirri-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-kirri-in: cubic-bezier(0.4, 0, 1, 1);
+    --duration-kirri-fast: 150ms;
+    --duration-kirri: 220ms;
+    --duration-kirri-slow: 320ms;
+}
+
+html.dark {
+    --kirri-bg: #0d1117;
+    --kirri-surface: #161b22;
+    --kirri-surface-muted: #1c2430;
+    --kirri-surface-hover: #243044;
+    --kirri-border: #2d3a4d;
+    --kirri-border-hover: #3d4f66;
+    --kirri-text: #e8edf5;
+    --kirri-text-secondary: #b3c0d4;
+    --kirri-text-muted: #8a9bb8;
+    --kirri-primary: #5b8fd4;
+    --kirri-primary-dark: #4a7ab8;
+    --kirri-primary-soft: color-mix(in srgb, #5b8fd4 18%, transparent);
+    --kirri-accent: #6b9aff;
+    --kirri-input-bg: #1c2430;
+    --kirri-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --kirri-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+    --kirri-success-bg: #064e3b33;
+    --kirri-success-border: #065f46;
+    --kirri-success-text: #6ee7b7;
+    --kirri-amber-bg: #78350f33;
+    --kirri-amber-border: #92400e;
+    --kirri-amber-text: #fcd34d;
+}
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-kirri-bg: var(--kirri-bg);
+    --color-kirri-surface: var(--kirri-surface);
+    --color-kirri-50: var(--kirri-surface-muted);
+    --color-kirri-100: var(--kirri-surface-hover);
+    --color-kirri-200: var(--kirri-border);
+    --color-kirri-300: var(--kirri-border-hover);
+    --color-kirri-400: var(--kirri-text-muted);
+    --color-kirri-500: var(--kirri-text-muted);
+    --color-kirri-600: var(--kirri-text-secondary);
+    --color-kirri-700: var(--kirri-text-secondary);
+    --color-kirri-800: var(--kirri-text);
+    --color-kirri-900: var(--kirri-text);
+    --color-kirri-primary: var(--kirri-primary);
+    --color-kirri-primary-dark: var(--kirri-primary-dark);
+    --color-kirri-accent: var(--kirri-accent);
+}
+
+html {
+    color-scheme: light;
+}
+
+html.dark {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--kirri-bg);
+    color: var(--kirri-text);
+    transition: background-color var(--duration-kirri) var(--ease-kirri), color var(--duration-kirri) var(--ease-kirri);
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.kirri-motion {
+    transition-property: color, background-color, border-color, box-shadow, transform, opacity, fill, stroke;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-sidebar {
+    background-color: var(--kirri-surface);
+    border-color: var(--kirri-border);
+    transition: background-color var(--duration-kirri) var(--ease-kirri), border-color var(--duration-kirri) var(--ease-kirri);
+}
+
+.kirri-header {
+    background-color: var(--kirri-surface);
+    border-color: var(--kirri-border);
+    transition: background-color var(--duration-kirri) var(--ease-kirri), border-color var(--duration-kirri) var(--ease-kirri);
+    min-height: 4rem;
+}
+
+.kirri-hover-surface {
+    border-radius: 0.5rem;
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-hover-surface:hover {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-text);
+}
+
+.kirri-inbox-active {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-primary);
+}
+
+.kirri-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--kirri-text-secondary);
+    border-radius: 0.5rem;
+    transition-property: color, background-color, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-menu-item:hover {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-text);
+}
+
+.kirri-menu-item:active {
+    transform: scale(0.98);
+}
+
+.kirri-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: var(--kirri-text-secondary);
+    transition-property: color, background-color, box-shadow, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-nav-link:hover {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-text);
+    box-shadow: var(--kirri-shadow);
+}
+
+.kirri-nav-link-active {
+    background-color: var(--kirri-primary);
+    color: white;
+    box-shadow: var(--kirri-shadow);
+}
+
+.kirri-nav-link-active:hover {
+    background-color: var(--kirri-primary-dark);
+    color: white;
+}
+
+.kirri-row-hover {
+    transition-property: background-color, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-row-hover:hover {
+    background-color: var(--kirri-surface-muted);
+}
+
+.kirri-table {
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.kirri-table thead {
+    background-color: var(--kirri-surface-muted);
+    border-bottom: 1px solid var(--kirri-border);
+}
+
+.kirri-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 500;
+    color: var(--kirri-text-muted);
+}
+
+.kirri-table tbody tr {
+    border-bottom: 1px solid var(--kirri-border);
+    transition: background-color var(--duration-kirri) var(--ease-kirri);
+}
+
+.kirri-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.kirri-table tbody tr:hover {
+    background-color: var(--kirri-surface-muted);
+}
+
+.kirri-table td {
+    padding: 0.75rem 1rem;
+    color: var(--kirri-text-secondary);
+}
+
+.kirri-table-footer {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--kirri-border);
+}
+
+.kirri-pill {
+    padding: 0.375rem 0.875rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-pill-idle {
+    background-color: var(--kirri-surface);
+    color: var(--kirri-text-secondary);
+    border: 1px solid var(--kirri-border);
+}
+
+.kirri-pill:hover:not(.kirri-pill-active) {
+    background-color: var(--kirri-surface-muted);
+    border-color: var(--kirri-border-hover);
+    box-shadow: var(--kirri-shadow);
+    transform: translateY(-1px);
+}
+
+.kirri-pill:active:not(.kirri-pill-active) {
+    transform: translateY(0);
+}
+
+.kirri-pill-active {
+    background-color: var(--kirri-primary);
+    color: white;
+    box-shadow: var(--kirri-shadow);
+}
+
+.kirri-tab {
+    flex: 1 1 0%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    border-bottom-width: 2px;
+    border-color: transparent;
+    color: var(--kirri-text-muted);
+    transition-property: color, border-color;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-tab:hover {
+    color: var(--kirri-text-secondary);
+}
+
+.kirri-tab-active {
+    color: var(--kirri-primary);
+    border-color: var(--kirri-primary);
+}
+
+.kirri-input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid var(--kirri-border);
+    background-color: var(--kirri-surface);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--kirri-text);
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-input::placeholder {
+    color: var(--kirri-text-muted);
+}
+
+.kirri-input:hover {
+    border-color: var(--kirri-border-hover);
+}
+
+.kirri-input:focus {
+    border-color: var(--kirri-accent);
+    background-color: var(--kirri-surface);
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--kirri-accent) 20%, transparent);
+}
+
+.kirri-input-search {
+    background-color: var(--kirri-input-bg);
+    border-color: transparent;
+}
+
+.kirri-input-search:focus {
+    background-color: var(--kirri-surface);
+    border-color: var(--kirri-accent);
+}
+
+.kirri-select {
+    border-radius: 0.5rem;
+    border: 1px solid var(--kirri-border);
+    background-color: var(--kirri-surface);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--kirri-text);
+    cursor: pointer;
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-select:hover {
+    border-color: var(--kirri-border-hover);
+    background-color: var(--kirri-surface-muted);
+}
+
+.kirri-select:focus {
+    border-color: var(--kirri-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--kirri-accent) 20%, transparent);
+}
+
+.kirri-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: white;
+    background-color: var(--kirri-primary);
+    border-radius: 0.5rem;
+    box-shadow: var(--kirri-shadow);
+    transition-property: color, background-color, box-shadow, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-btn-primary:hover {
+    background-color: var(--kirri-primary-dark);
+    box-shadow: var(--kirri-shadow-md);
+    transform: translateY(-1px);
+}
+
+.kirri-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--kirri-shadow);
+}
+
+.kirri-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: var(--kirri-text-secondary);
+    background-color: var(--kirri-surface);
+    border: 1px solid var(--kirri-border);
+    border-radius: 0.5rem;
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-btn-secondary:hover {
+    background-color: var(--kirri-surface-muted);
+    border-color: var(--kirri-border-hover);
+    box-shadow: var(--kirri-shadow);
+    transform: translateY(-1px);
+}
+
+.kirri-btn-secondary:active {
+    transform: translateY(0);
+}
+
+.kirri-panel {
+    background-color: var(--kirri-surface);
+    border-radius: 0.75rem;
+    border: 1px solid var(--kirri-border);
+    box-shadow: var(--kirri-shadow);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-dropdown-panel {
+    background-color: var(--kirri-surface);
+    border: 1px solid var(--kirri-border);
+    box-shadow: var(--kirri-shadow-md);
+}
+
+.kirri-dropdown-panel-up {
+    transform-origin: bottom center;
+}
+
+.kirri-account-dropdown {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    right: 0;
+    z-index: 60;
+}
+
+.kirri-pin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    color: var(--kirri-text-muted);
+    border: 1px solid var(--kirri-border);
+    background-color: var(--kirri-surface);
+    cursor: pointer;
+    transition-property: color, background-color, border-color, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-pin-btn:hover {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-text);
+    border-color: var(--kirri-border-hover);
+}
+
+.kirri-pin-btn-active {
+    color: var(--kirri-primary);
+    background-color: var(--kirri-primary-soft);
+    border-color: color-mix(in srgb, var(--kirri-primary) 35%, var(--kirri-border));
+}
+
+.kirri-pin-icon {
+    background-color: currentColor;
+    mask-image: var(--kirri-pin-icon);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--kirri-pin-icon);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+}
+
+.kirri-success-banner {
+    background-color: var(--kirri-success-bg);
+    border-color: var(--kirri-success-border);
+    color: var(--kirri-success-text);
+}
+
+.kirri-message-avatar-client {
+    background-color: var(--kirri-surface-hover);
+    color: var(--kirri-text-secondary);
+}
+
+.kirri-message-avatar-operator {
+    background-color: var(--kirri-primary);
+    color: white;
+}
+
+.kirri-message-bubble-client {
+    background-color: var(--kirri-surface);
+    border: 1px solid var(--kirri-border);
+    color: var(--kirri-text);
+    box-shadow: var(--kirri-shadow);
+}
+
+.kirri-message-bubble-operator {
+    background-color: var(--kirri-primary-soft);
+    color: var(--kirri-text);
+}
+
+.kirri-message-bubble-internal {
+    background-color: var(--kirri-amber-bg);
+    border: 1px solid var(--kirri-amber-border);
+    color: var(--kirri-text);
+}
+
+.kirri-badge-internal {
+    background-color: var(--kirri-amber-bg);
+    color: var(--kirri-amber-text);
+}
+
+.kirri-badge-default {
+    background-color: var(--kirri-surface-hover);
+    color: var(--kirri-text-secondary);
+}
+
+.kirri-conversation-bg {
+    background-color: color-mix(in srgb, var(--kirri-surface-muted) 60%, var(--kirri-bg));
+}
+
+.kirri-dropdown-up-enter {
+    transition: opacity var(--duration-kirri) var(--ease-kirri-out), transform var(--duration-kirri) var(--ease-kirri-out);
+}
+
+.kirri-dropdown-up-enter-start {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+}
+
+.kirri-dropdown-up-enter-end {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.kirri-dropdown-up-leave {
+    transition: opacity var(--duration-kirri-fast) var(--ease-kirri-in), transform var(--duration-kirri-fast) var(--ease-kirri-in);
+}
+
+.kirri-dropdown-up-leave-start {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.kirri-dropdown-up-leave-end {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+}
+
+.kirri-chevron {
+    transition-property: transform;
+    transition-duration: var(--duration-kirri-slow);
+    transition-timing-function: var(--ease-kirri-out);
+}
+
+.kirri-link {
+    color: var(--kirri-primary);
+    transition-property: color;
+    transition-duration: var(--duration-kirri-fast);
+    transition-timing-function: var(--ease-kirri-out);
+}
+
+.kirri-link:hover {
+    color: var(--kirri-primary-dark);
+}
+
+.kirri-tab-panel-enter {
+    transition: opacity var(--duration-kirri) var(--ease-kirri-out), transform var(--duration-kirri) var(--ease-kirri-out);
+}
+
+.kirri-tab-panel-enter-start {
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+.kirri-tab-panel-enter-end {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kirri-theme-toggle-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    color: var(--kirri-text-secondary);
+    border: 1px solid var(--kirri-border);
+    background-color: var(--kirri-surface);
+    cursor: pointer;
+    transition-property: color, background-color, border-color, transform;
+    transition-duration: var(--duration-kirri);
+    transition-timing-function: var(--ease-kirri);
+}
+
+.kirri-theme-toggle-header:hover {
+    background-color: var(--kirri-surface-muted);
+    color: var(--kirri-text);
+    border-color: var(--kirri-border-hover);
+}
+
+.kirri-theme-toggle-header:active {
+    transform: scale(0.95);
+}
+
+.kirri-login-side {
+    background-color: var(--kirri-bg);
+}
+
+.kirri-login-hero {
+    position: relative;
+}
+
+.kirri-login-grid {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.kirri-login-card {
+    box-shadow: var(--kirri-shadow-md);
+}
+
+.kirri-field {
+    position: relative;
+}
+
+.kirri-field-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--kirri-text-muted);
+    pointer-events: none;
+}
+
+.kirri-input-with-icon {
+    padding-left: 2.625rem;
+}
+
+.kirri-login-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+}
+
+.kirri-login-alert-success {
+    background-color: var(--kirri-success-bg);
+    border: 1px solid var(--kirri-success-border);
+    color: var(--kirri-success-text);
+}
+
+.kirri-login-alert-error {
+    background-color: color-mix(in srgb, #ef4444 12%, var(--kirri-surface));
+    border: 1px solid color-mix(in srgb, #ef4444 35%, var(--kirri-border));
+    color: #b91c1c;
+}
+
+html.dark .kirri-login-alert-error {
+    color: #fca5a5;
+}
